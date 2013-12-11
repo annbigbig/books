@@ -108,14 +108,14 @@ public class annTest {
 	
 	//測試我寫的JavaMailTool，使用pchome信箱pop3收信
 	public static void test10() throws Exception{
-		String[] args = {"pop3.pchome.com.tw","110","tonychacha","car007e2"};
+		String[] args = {"pop3.pchome.com.tw","110","aeaeeeewcha","asdfdd2"};
 		JavaMailTool tool = new JavaMailTool(args);
 		tool.downloadEmailAttachments();
 	}
 	
 	//測試我寫的JavaMailTool，使用yahoo信箱pop3收信
 	public static void test11() throws Exception{
-		String[] args = {"pop.mail.yahoo.com","110","annbigbig","tel26366591"};
+		String[] args = {"pop.mail.yahoo.com","110","dkdkwewe","tel12345678"};
 		JavaMailTool tool = new JavaMailTool(args);
 		tool.downloadEmailAttachments();
 	}
@@ -124,8 +124,8 @@ public class annTest {
 	public static void test12(){
 		WorkerDao dao = WorkerDao.getInstance();
 		Worker worker = new Worker();
-		worker.setName("annbigbig");
-		worker.setPassword("tel26366591");
+		worker.setName("dkdkwewe");
+		worker.setPassword("tel12345678");
 		worker.setPermission(200);
 		if(dao.addWorker(worker)){
 			System.out.println("新增Worker成功");
@@ -139,7 +139,7 @@ public class annTest {
 		FolderDao dao = FolderDao.getInstance();
 		Folder folder = new Folder();
 		folder.setParentId(0); 	//根節點，所有的inbox資料夾都應該是根節點
-		folder.setWorkerName("annbigbig");
+		folder.setWorkerName("dkdkwewe");
 		folder.setName("inbox");
 		if(dao.addFolder(folder)){
 			System.out.println("新增資料夾成功");
@@ -159,7 +159,7 @@ public class annTest {
 	public static void test15(){
 		FolderDao dao = FolderDao.getInstance();
 		Folder inbox;
-		inbox = dao.getInbox("annbigbig");
+		inbox = dao.getInbox("dkdkwewe");
 		if(inbox!=null){
 			System.out.println("inbox.getId()=" + inbox.getId());
 			System.out.println("inbox.getParentId()=" + inbox.getParentId());
@@ -173,7 +173,7 @@ public class annTest {
 	
 	//測試JavaMailTool，把Gmail信箱的信件收下來
 	public static void test16() throws Exception{
-		String[] args = {"pop.gmail.com","995","annbigbig","tel26366591"};
+		String[] args = {"pop.gmail.com","995","dkdkwewe","tel12345678"};
 		JavaMailTool tool = new JavaMailTool(args);
 		tool.downloadEmailAttachments();
 	}
