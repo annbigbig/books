@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+	
+<struts>    
+	<package name="back.general" namespace="/back/general" extends="back">
+ 	
+		<action name="queryMails" class="back.controller.general.mail.QueryMails">
+			<interceptor-ref name="backInterceptorsStack"></interceptor-ref>
+			<interceptor-ref name="execAndWait">
+            		<param name="delay">1000</param>
+            		<param name="delaySleepInterval">500</param>
+        	</interceptor-ref>	
+			<result name="success">/WEB-INF/back/general/mail/query.jsp</result>
+		</action>
+		<action name="mailXML" class="back.controller.general.mail.MailXML">
+			<result name="success" type="stream">
+				<param name="contentType">text/html</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentCharSet">utf-8</param>
+			</result>
+		</action>
+		<action name="bodyMessage" class="back.controller.general.mail.BodyMessageAction">
+				<result name="success" type="stream">
+				<param name="contentType">text/html</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentCharSet">utf-8</param>
+			</result>
+		</action>
+		<action name="download" class="back.controller.general.mail.Download">
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+	  			<param name="inputName">inputStream</param>
+	  			<param name="contentDisposition">attachment;filename="${attachment.filename}"</param>
+	  			<param name="bufferSize">1024</param>
+			</result>
+		</action>
+		<action name="takeLongTime" class="back.controller.test.TakeLongTime">
+			<interceptor-ref name="backInterceptorsStack"></interceptor-ref>
+			<interceptor-ref name="execAndWait">
+            	<param name="delay">1000</param>
+            	<param name="delaySleepInterval">500</param>
+        	</interceptor-ref>
+        	<result name="success">/back/wait/afterWaiting.jsp</result>
+		</action>
+	</package>
+</struts>

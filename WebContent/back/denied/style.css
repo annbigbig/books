@@ -1,0 +1,4 @@
+    body{ font-family: verdana; font-size:12px; }
+    a{text-decoration: none;color:blue;font-weight: bold;}
+    a:hover{color: gray;font-weight: bold;}
+    div#my-timer{width: 400px;background: lightblue; margin:  0 auto;text-align: center;padding:5px 0px 5px 0px;}

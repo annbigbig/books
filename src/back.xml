@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <package name="back" namespace="/back" extends="default">
+		
+        <interceptors>
+        	<!-- 自定義的pleaseLogin攔截器，用途是強制後台用戶登入 -->
+			<interceptor name="pleaseLogin" class="back.interceptor.LoginInterceptor"/>
+			<!-- 此處再追加一個自定義的攔截器permissionCheck，如果工作人員沒有部門權限，不可以進入 -->
+			<interceptor name="permissionCheck" class="back.interceptor.PermissionInterceptor">
+    			<!-- 傳入以下兩個參數，純測試用 -->
+    			<param name="param1">one</param>
+  				<param name="param2">two</param>
+    		</interceptor>
+    		<!-- 自定義的loggerInterceptor，記錄工作人員的操作行為 -->
+    		<interceptor name="logger" class="back.interceptor.LoggerInterceptor"/>
+    		<!-- 自定義的allowList攔截器，不在名單上的工作人員不得進入此控制器 -->
+    		<!-- 注意此攔截器沒有被編入下方的backInterceptorsStack -->
+    		<interceptor name="allowList" class="back.interceptor.AllowListInterceptor"/>
+			<interceptor-stack name="backInterceptorsStack">
+				<interceptor-ref name="pleaseLogin"/>
+				<interceptor-ref name="permissionCheck"/>
+				<interceptor-ref name="logger"/>
+				<interceptor-ref name="defaultStack"/>	
+			</interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="backInterceptorsStack"/>
+        
+         <global-results>
+         	<!-- 如果沒有登入後台，就會被pleaseLogin攔截器強制前往後台登入頁面 -->
+            <result name="login">/back/login/login.jsp</result>
+            <!-- 沒有該部門的權限，就會被permissionCheck攔截器強制前往警告頁面，此警告頁於十秒後再轉發後台主頁 -->
+            <!-- 如果Action啟用了allowList攔截器，沒有在允許名單上的工作人員，也會被allowList攔截器強制轉發來到此頁，此警告頁十秒後重定向到所屬部門首頁 -->
+            <result name="denied">/back/denied/denied.jsp</result>
+            <!-- 攔截器execAndWait使用的等待頁面 -->
+            <result name="wait">/back/wait/wait.jsp</result>
+        </global-results>
+        
+        <action name="index" class="back.controller.IndexAction">
+            <result name="success">/WEB-INF/back/index.jsp</result>
+        </action>
+        
+        <action name="login" class="back.controller.login.LoginAction">
+			<!-- 登入後台成功，重定向到後台首頁 -->
+        	 <result name="success" type="redirectAction">
+                <param name="actionName">index</param>
+                <param name="namespace">/back</param>
+            </result>
+            <result name="input">/back/login/login.jsp</result>
+        </action>
+        
+        <action name="logout" class="back.controller.logout.LogoutAction"/>
+        
+    </package>    
+    
+</struts>

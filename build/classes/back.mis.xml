@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+	
+<struts>    
+	<package name="back.mis" namespace="/back/mis" extends="back">
+	
+		<action name="index" class="back.controller.mis.IndexAction">
+			<result name="success">/WEB-INF/back/mis/index.jsp</result>
+		</action>
+		
+		<action name="queryWorker" class="back.controller.mis.worker.QueryWorker">
+			<interceptor-ref name="backInterceptorsStack"/>
+			<interceptor-ref name="allowList">
+				<!-- 不在下列名單上的工作人員，會被強制轉發到denied視圖 -->
+				<param name="allowWorkers">tony,john,mary,sherry</param>
+			</interceptor-ref>
+			<result name="success">/WEB-INF/back/mis/queryWorker.jsp</result>
+		</action>
+
+	</package>
+</struts>
